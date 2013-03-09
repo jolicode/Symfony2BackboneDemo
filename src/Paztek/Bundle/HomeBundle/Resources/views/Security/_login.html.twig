@@ -1,0 +1,13 @@
+<form class="form-signin">
+	<h2 class="form-signin-heading">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</h2>
+	<% if (typeof(message) != 'undefined') { %>
+	<div class="alert alert-<%= level %>"><%= message %></div>
+	<% } %>
+	<input type="text" class="input-block-level" name="_username" required="required" placeholder="{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}">
+	<input type="password" class="input-block-level" name="_password" required="required" placeholder="{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}">
+	<label class="checkbox">
+	    <input type="checkbox" value="remember-me">
+	    {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
+	</label>
+	<button class="btn btn-large btn-primary" type="submit">{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}</button>
+</form>

@@ -4,17 +4,22 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
-    <parameters>
-        <parameter key="paztek_home.example.class">Paztek\Bundle\HomeBundle\Example</parameter>
-    </parameters>
-
     <services>
-        <service id="paztek_home.example" class="%paztek_home.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <service id="paztek_home.always_true_csrf_provider" class="Paztek\Bundle\HomeBundle\Form\Extension\Csrf\CsrfProvider\AlwaysTrueCsrfProvider">
+            <argument type="service" id="session" />
+            <argument>%kernel.secret%</argument>
+        </service>
+        
+        <service id="paztek_home.ajax_authentication_success_handler" class="Paztek\Bundle\HomeBundle\Security\Http\Authentication\AjaxAuthenticationSuccessHandler">
+	        <call method="setContainer">
+	             <argument type="service" id="service_container" />
+	        </call>
+        </service>
+        
+        <service id="paztek_home.ajax_authentication_failure_handler" class="Paztek\Bundle\HomeBundle\Security\Http\Authentication\AjaxAuthenticationFailureHandler">
+        </service>
+        
+        <service id="paztek_home.ajax_logout_success_handler" class="Paztek\Bundle\HomeBundle\Security\Http\Authentication\AjaxLogoutSuccessHandler">
         </service>
     </services>
-    -->
 </container>

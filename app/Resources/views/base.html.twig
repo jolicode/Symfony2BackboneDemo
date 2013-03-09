@@ -2,12 +2,58 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <title>{% block title %}Tuto Auth Backbone <-- Ajax --> Symfony2{% endblock %}</title>
+        <base href="{{ app.environment == 'prod' ? '/' : '/app_' ~ (app.environment) ~ '.php' }}">
+        {% block stylesheets %}
+        <link rel="stylesheet" href="/bundles/paztekhome/css/bootstrap.css">
+        <link rel="stylesheet" href="/bundles/paztekhome/css/bootstrap-responsive.css">
+        <link rel="stylesheet" href="/bundles/paztekhome/css/main.css">
+        {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block body %}
+        <div id="header">
+            {% block header %}{% endblock %}
+        </div>
+        
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+        {% endblock %}
+        
+        {% block templates %}
+        <script type="text/x-template" id="header_tpl">
+            {% include 'PaztekHomeBundle:Default:_header.html.twig' %}
+        </script>
+        <script type="text/x-template" id="homepage_tpl">
+            {% include 'PaztekHomeBundle:Default:_homepage.html.twig' %}
+        </script>
+        <script type="text/x-template" id="dashboard_tpl">
+            {% include 'PaztekHomeBundle:Default:_dashboard.html.twig' %}
+        </script>
+        <script type="text/x-template" id="login_tpl">
+            {% include 'PaztekHomeBundle:Security:_login.html.twig' %}
+        </script>
+        {% endblock %}
+        
+        {% block bootstrap %}
+            {% autoescape false %}
+            <script type="text/javascript">
+                var user = {{ user }};
+                var root = {{ app.environment == 'prod' ? '/' : '\'/app_' ~ (app.environment) ~ '.php\'' }};
+            </script>
+            {% endautoescape %}
+        {% endblock %}
+        
+        {% block javascripts %}
+        <script type="text/javascript" src="/bundles/paztekhome/js/libs/jquery.js"></script>
+        <script type="text/javascript" src="/bundles/paztekhome/js/libs/json2.js"></script>
+        <script type="text/javascript" src="/bundles/paztekhome/js/libs/underscore.js"></script>
+        <script type="text/javascript" src="/bundles/paztekhome/js/libs/backbone.js"></script>
+        <script type="text/javascript" src="/bundles/paztekhome/js/libs/backbone.marionette.js"></script>
+        <script type="text/javascript" src="/bundles/paztekhome/js/libs/bootstrap.js"></script>
+        <script type="text/javascript" src="/bundles/paztekhome/js/main.js"></script>
+        {% endblock %}
     </body>
 </html>

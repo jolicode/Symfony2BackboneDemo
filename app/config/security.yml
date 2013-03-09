@@ -23,8 +23,11 @@ security:
             pattern: ^/
             form_login:
                 provider: fos_userbundle
-                csrf_provider: form.csrf_provider
-            logout:       true
+                csrf_provider: paztek_home.always_true_csrf_provider
+                success_handler: paztek_home.ajax_authentication_success_handler
+                failure_handler: paztek_home.ajax_authentication_failure_handler
+            logout:
+                success_handler: paztek_home.ajax_logout_success_handler
             anonymous:    true
 
     access_control:
