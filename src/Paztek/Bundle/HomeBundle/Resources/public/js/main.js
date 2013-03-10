@@ -196,8 +196,10 @@ Paz.Router = Marionette.AppRouter.extend({
 			Backbone.history.navigate('#/dashboard', { trigger: true });
 		}
 		// else we display the header and the login form
-		this.showHeader();
-		this.showLogin();
+		else {
+			this.showHeader();
+			this.showLogin();
+		}
 	},
 	logout: function() {
 		$.ajax({
