@@ -20,7 +20,7 @@ var Paz = {};
  */
 Paz.User = Backbone.Model.extend({
 	isLoggedIn: function() {
-		return (this.has('username'));
+		return (this.has('username')); // It works, as a user is either an empty shell or full of attributes
 	},
 	hasRole: function(role) {
 		return (this.has('roles') && this.get('roles').indexOf(role) != -1);
@@ -54,20 +54,6 @@ Paz.FruitCollection = Backbone.Collection.extend({
  * The model representing an alert (success, warning, error, etc...)
  */
 Paz.Alert = Backbone.Model.extend({
-});
-
-/**
- * Our Marionette app
- */
-Paz.app = new Marionette.Application();
-
-/**
- * The main regions of our app
- */
-Paz.app.addRegions({
-	header: '#header',
-	content: '#content',
-	modal: '#modal'
 });
 
 /**
@@ -164,6 +150,7 @@ Paz.LoginView = Marionette.ItemView.extend({
 					Paz.app.data.users = new Paz.UserCollection();
 					Paz.app.data.users.fetch();
 				}
+				// We redirect to the dashboard
 				Backbone.history.navigate('#/dashboard', { trigger: true });
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
@@ -262,6 +249,20 @@ Paz.Router = Marionette.AppRouter.extend({
 		var loginView = new Paz.LoginView();
 		Paz.app.content.show(loginView);
 	}
+});
+
+/**
+ * Our Marionette app
+ */
+Paz.app = new Marionette.Application();
+
+/**
+ * The main regions of our app
+ */
+Paz.app.addRegions({
+	header: '#header',
+	content: '#content',
+	modal: '#modal'
 });
 
 /**

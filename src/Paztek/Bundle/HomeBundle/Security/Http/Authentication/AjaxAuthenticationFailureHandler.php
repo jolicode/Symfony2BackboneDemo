@@ -16,7 +16,6 @@ class AjaxAuthenticationFailureHandler implements AuthenticationFailureHandlerIn
     {
         // We keep the relevant infos of the exception
         $alert = array(
-                'code' => $exception->getCode(),
                 'message' => $exception->getMessage(),
                 'level' => 'error');
 

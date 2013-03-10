@@ -7,6 +7,12 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 use Paztek\Bundle\HomeBundle\Entity\User;
 
+/**
+ * Fill the database with some users
+ * 
+ * @author matthieu
+ *
+ */
 class LoadUserData implements FixtureInterface
 {
     public function load(ObjectManager $manager)

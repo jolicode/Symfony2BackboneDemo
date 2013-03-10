@@ -13,9 +13,9 @@ class AjaxLogoutSuccessHandler implements LogoutSuccessHandlerInterface
      */
     public function onLogoutSuccess(Request $request)
     {
-        // We keep the relevant infos of the exception
+        // We create an alert for the client to optionnally display
         $alert = array(
-                'code' => 0,
+                'level' => 'success',
                 'message' => 'You successfully logged out');
 
         // And return the encoded alert in response

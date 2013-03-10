@@ -7,6 +7,12 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 use Paztek\Bundle\HomeBundle\Entity\Fruit;
 
+/**
+ * Fill the database with some juicy fruits
+ * 
+ * @author matthieu
+ *
+ */
 class LoadFruitData implements FixtureInterface
 {
     public function load(ObjectManager $manager)
