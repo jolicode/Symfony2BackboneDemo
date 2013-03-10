@@ -23,7 +23,7 @@ Paz.User = Backbone.Model.extend({
 		return (this.has('username'));
 	},
 	hasRole: function(role) {
-		return (this.get('roles').indexOf(role) != -1);
+		return (this.has('roles') && this.get('roles').indexOf(role) != -1);
 	}
 });
 
@@ -164,7 +164,7 @@ Paz.LoginView = Marionette.ItemView.extend({
 					Paz.app.data.users = new Paz.UserCollection();
 					Paz.app.data.users.fetch();
 				}
-				Backbone.history.navigate('#', { trigger: true });
+				Backbone.history.navigate('#/dashboard', { trigger: true });
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				this.model.set($.parseJSON(jqXHR.responseText)); // TODO Handle edge cases of network problem and responseText = null
@@ -179,18 +179,34 @@ Paz.LoginView = Marionette.ItemView.extend({
 Paz.Router = Marionette.AppRouter.extend({
 	routes: {
 		'': 			'home',
+		'dashboard': 	'dashboard',
 		'login': 		'login',
 		'logout': 		'logout'
 	},
 	home: function() {
-		// We display the header and the content
-		this.showHeader();
-		this.showContent();
+		// If the user is already authenticated, we display his dashboard instead
+		if (Paz.app.user.isLoggedIn()) {
+			Backbone.history.navigate('#/dashboard', { trigger: true });
+		} else {
+			// We display the header and the homepage
+			this.showHeader();
+			this.showHomepage();
+		}
+	},
+	dashboard: function() {
+		// If the user isn't authenticated yet, we redirect to the login page
+		if (!Paz.app.user.isLoggedIn()) {
+			Backbone.history.navigate('#/login', { trigger: true });
+		} else {
+			// We display the header and the dashboard
+			this.showHeader();
+			this.showDashboard();
+		}
 	},
 	login: function() {
-		// If the user is already connected, we 'redirect' to the home
+		// If the user is already authenticated, we 'redirect' to the home
 		if (Paz.app.user.isLoggedIn()) {
-			Backbone.history.navigate('#', { trigger: true });
+			Backbone.history.navigate('#/dashboard', { trigger: true });
 		}
 		// else we display the header and the login form
 		this.showHeader();
@@ -220,28 +236,26 @@ Paz.Router = Marionette.AppRouter.extend({
 			Paz.app.header.show(headerView);
 		}
 	},
-	showContent: function() {
-		// We show a different view depending on whether the user is authenticated or not
-		if (Paz.app.user.isLoggedIn()) {
-			var dashboardView = new Paz.DashboardView({
-				model: Paz.app.user
+	showHomepage: function() {
+		var homepageView = new Paz.HomepageView();
+		Paz.app.content.show(homepageView);
+	},
+	showDashboard: function() {
+		var dashboardView = new Paz.DashboardView({
+			model: Paz.app.user
+		});
+		Paz.app.content.show(dashboardView);
+		// The authenticated user has access to fruits
+		var fruitsListView = new Paz.FruitsListView({
+			collection: Paz.app.data.fruits
+		});
+		dashboardView.fruits.show(fruitsListView);
+		// If the authenticated user has the ROLE_ADMIN, he has access to users too
+		if (Paz.app.user.hasRole('ROLE_ADMIN')) {
+			var usersListView = new Paz.UsersListView({
+				collection: Paz.app.data.users
 			});
-			Paz.app.content.show(dashboardView);
-			// The authenticated user has access to fruits
-			var fruitsListView = new Paz.FruitsListView({
-				collection: Paz.app.data.fruits
-			});
-			dashboardView.fruits.show(fruitsListView);
-			// If the authenticated user has the ROLE_ADMIN, he has access to users too
-			if (Paz.app.user.hasRole('ROLE_ADMIN')) {
-				var usersListView = new Paz.UsersListView({
-					collection: Paz.app.data.users
-				});
-				dashboardView.users.show(usersListView);
-			}
-		} else {
-			var homepageView = new Paz.HomepageView();
-			Paz.app.content.show(homepageView);
+			dashboardView.users.show(usersListView);
 		}
 	},
 	showLogin: function() {
