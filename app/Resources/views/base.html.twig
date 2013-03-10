@@ -23,6 +23,9 @@
         {% endblock %}
         
         {% block templates %}
+        <script type="text/x-template" id="login_tpl">
+            {% include 'PaztekHomeBundle:Security:_login.html.twig' %}
+        </script>
         <script type="text/x-template" id="header_tpl">
             {% include 'PaztekHomeBundle:Default:_header.html.twig' %}
         </script>
@@ -32,16 +35,33 @@
         <script type="text/x-template" id="dashboard_tpl">
             {% include 'PaztekHomeBundle:Default:_dashboard.html.twig' %}
         </script>
-        <script type="text/x-template" id="login_tpl">
-            {% include 'PaztekHomeBundle:Security:_login.html.twig' %}
+        <script type="text/x-template" id="fruits_list_tpl">
+            {% include 'PaztekHomeBundle:Fruit:_fruits_list.html.twig' %}
+        </script>
+        <script type="text/x-template" id="fruit_list_item_tpl">
+            {% include 'PaztekHomeBundle:Fruit:_fruit_list_item.html.twig' %}
+        </script>
+        <script type="text/x-template" id="users_list_tpl">
+            {% include 'PaztekHomeBundle:User:_users_list.html.twig' %}
+        </script>
+        <script type="text/x-template" id="user_list_item_tpl">
+            {% include 'PaztekHomeBundle:User:_user_list_item.html.twig' %}
         </script>
         {% endblock %}
         
         {% block bootstrap %}
             {% autoescape false %}
             <script type="text/javascript">
-                var user = {{ user }};
                 var root = {{ app.environment == 'prod' ? '/' : '\'/app_' ~ (app.environment) ~ '.php\'' }};
+                {% if user is defined %}
+                var user = {{ user | serialize | raw }};
+                {% endif %}
+                {% if fruits is defined %}
+                var fruits = {{ fruits | serialize | raw }};
+                {% endif %}
+                {% if users is defined %}
+                var users = {{ users | serialize | raw }};
+                {% endif %}
             </script>
             {% endautoescape %}
         {% endblock %}

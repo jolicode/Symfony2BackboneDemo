@@ -1,6 +1,6 @@
 <?php
 
-namespace Paztek\Bundle\HomeBundle\Entity;
+namespace Paztek\Bundle\HomeBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
