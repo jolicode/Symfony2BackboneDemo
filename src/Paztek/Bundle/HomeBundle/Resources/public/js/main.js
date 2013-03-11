@@ -137,7 +137,7 @@ Paz.LoginView = Marionette.ItemView.extend({
 		$.ajax({
 			context: this,
 			type: 'POST',
-			url: '/login_check',
+			url: 'login_check',
 			data: form.serialize(),
 			dataType: 'json',
 			success: function(data, textStatus, errorThrown) {
@@ -205,7 +205,7 @@ Paz.Router = Marionette.AppRouter.extend({
 		$.ajax({
 			context: this,
 			type: 'GET',
-			url: '/logout',
+			url: 'logout',
 			dataType: 'json',
 			success: function(data, textStatus, errorThrown) {
 				Paz.app.user.clear();

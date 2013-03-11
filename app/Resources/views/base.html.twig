@@ -51,7 +51,7 @@
         {% block bootstrap %}
             {% autoescape false %}
             <script type="text/javascript">
-                var root = {{ app.environment == 'prod' ? '/' : '\'/app_' ~ (app.environment) ~ '.php\'' }};
+                var root = '{{ path('homepage') }}';
                 {% if user is defined %}
                 var user = {{ user | serialize | raw }};
                 {% endif %}
