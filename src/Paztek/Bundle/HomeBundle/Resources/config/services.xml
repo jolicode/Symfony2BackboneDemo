@@ -11,8 +11,8 @@
         </service>
         
         <service id="paztek_home.ajax_authentication_success_handler" class="Paztek\Bundle\HomeBundle\Security\Http\Authentication\AjaxAuthenticationSuccessHandler">
-	        <call method="setContainer">
-	             <argument type="service" id="service_container" />
+	        <call method="setSerializer">
+	             <argument type="service" id="serializer" />
 	        </call>
         </service>
         

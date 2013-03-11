@@ -263,8 +263,7 @@ Paz.app = new Marionette.Application();
  */
 Paz.app.addRegions({
 	header: '#header',
-	content: '#content',
-	modal: '#modal'
+	content: '#content'
 });
 
 /**
