@@ -32,7 +32,7 @@ Paz.User = Backbone.Model.extend({
  */
 Paz.UserCollection = Backbone.Collection.extend({
 	model: Paz.User,
-	url: '/users'
+	url: 'users'
 });
 
 /**
@@ -47,7 +47,7 @@ Paz.Fruit = Backbone.Model.extend({
  */
 Paz.FruitCollection = Backbone.Collection.extend({
 	model: Paz.Fruit,
-	url: '/fruits'
+	url: 'fruits'
 });
 
 /**
